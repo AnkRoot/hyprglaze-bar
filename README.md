@@ -18,6 +18,20 @@ HyprGlaze Bar 是一个专为 Windows 平台设计的现代化状态栏，通过
 
 > 💡 **想了解更多？** 查看 [项目推广页面](PROMOTION.md) 了解详细特性
 
+## 📸 界面展示
+
+<div align="center">
+
+![状态栏展示1](docs/images/bar1.png)
+![状态栏展示2](docs/images/bar2.png)
+![状态栏展示3](docs/images/bar3.png)
+![状态栏展示4](docs/images/bar4.png)
+![状态栏展示5](docs/images/bar5.png)
+![状态栏展示6](docs/images/bar6.png)
+![状态栏展示7](docs/images/bar7.png)
+
+</div>
+
 ---
 
 ## ✨ 技术特性
@@ -46,27 +60,9 @@ HyprGlaze Bar 是一个专为 Windows 平台设计的现代化状态栏，通过
 
 ---
 
-## 🚀 快速开始
-
-> 📖 **详细安装指南**: 查看 [PROMOTION.md](PROMOTION.md) 获取完整的安装说明和功能介绍
-
-### 一键安装
-
-```bash
-git clone https://github.com/AnkRoot/hyprglaze-bar.git
-cd hyprglaze-bar
-# 复制配置文件
-copy "glazewm\config.yaml" "%USERPROFILE%\.glzr\glazewm\config.yaml"
-copy "zebar\settings.json" "%USERPROFILE%\.glzr\zebar\settings.json"
-# 复制主题文件到 Zebar 目录
-xcopy /E /I "zebar\hyprglaze-bar" "%USERPROFILE%\.glzr\zebar\hyprglaze-bar"
-```
-
-> ⚠️ **重要**: 确保 Zebar 版本为 3.0+，GlazeWM 默认安装的 2.7 版本不兼容
-
----
-
 ## 📦 安装指南
+
+> 📖 **详细功能介绍**: 查看 [PROMOTION.md](PROMOTION.md) 了解完整特性说明
 
 ### 系统要求
 
@@ -74,24 +70,23 @@ xcopy /E /I "zebar\hyprglaze-bar" "%USERPROFILE%\.glzr\zebar\hyprglaze-bar"
 - **GlazeWM**: v3.0.0+ ([下载最新版本](https://github.com/glzr-io/glazewm/releases))
 - **Zebar**: v3.0.0+ ([下载最新版本](https://github.com/glzr-io/zebar/releases)) ⚠️ **重要：必须手动升级到 3.0+版本**
 
-### 完整安装步骤
+### 安装步骤
 
-1. **克隆项目**
+```bash
+# 1. 克隆项目
+git clone https://github.com/AnkRoot/hyprglaze-bar.git
+cd hyprglaze-bar
 
-   ```bash
-   git clone https://github.com/AnkRoot/hyprglaze-bar.git
-   cd hyprglaze-bar
-   ```
+# 2. 复制配置文件
+copy "glazewm\config.yaml" "%USERPROFILE%\.glzr\glazewm\config.yaml"
+copy "zebar\settings.json" "%USERPROFILE%\.glzr\zebar\settings.json"
 
-2. **复制配置文件**
+# 3. 复制主题文件
+xcopy /E /I "zebar\hyprglaze-bar" "%USERPROFILE%\.glzr\zebar\hyprglaze-bar"
 
-   ```bash
-   copy "glazewm\config.yaml" "%USERPROFILE%\.glzr\glazewm\config.yaml"
-   copy "zebar\settings.json" "%USERPROFILE%\.glzr\zebar\settings.json"
-   xcopy /E /I "zebar\hyprglaze-bar" "%USERPROFILE%\.glzr\zebar\hyprglaze-bar"
-   ```
-
-3. **启动 GlazeWM** - 重启或重新加载配置 (`Win + Ctrl + R`)
+# 4. 重新加载 GlazeWM 配置
+# Win + Ctrl + R 或重启 GlazeWM
+```
 
 ---
 
@@ -99,28 +94,23 @@ xcopy /E /I "zebar\hyprglaze-bar" "%USERPROFILE%\.glzr\zebar\hyprglaze-bar"
 
 ### 界面布局
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ [平铺] [工作区]          [天气 时间]          [系统] [音量] [托盘] │
-└─────────────────────────────────────────────────────────────────┘
-```
+<div align="center">
+
+![界面布局示例](docs/images/bar1.png)
+
+_现代化状态栏布局：平铺控制 | 工作区管理 | 天气时间 | 系统监控 | 音量控制 | 系统托盘_
+
+</div>
 
 ### 快捷键操作
 
+<div align="center">
+
+![快捷键参考](docs/images/key.png)
+
 > 🔗 **完整快捷键参考**: [查看可视化快捷键指南](docs/shortcuts-reference.html)
 
-#### 🏗️ 窗口管理
-
-- **Win + ←/→/↑/↓**: 移动焦点
-- **Win + Shift + ←/→/↑/↓**: 移动窗口
-- **Win + Space**: 切换浮动模式
-- **Win + F**: 切换全屏
-
-#### 🏢 工作区管理
-
-- **Win + 1-9,0**: 切换到指定工作区
-- **Win + Shift + 1-9,0**: 移动窗口到指定工作区
-- **Win + Page Up/Down**: 切换活动工作区
+</div>
 
 ### 状态栏操作
 
