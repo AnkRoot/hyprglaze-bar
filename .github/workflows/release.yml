@@ -1,0 +1,65 @@
+name: 发布版本
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: zebar/hyprglaze-bar
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: 'zebar/hyprglaze-bar/pnpm-lock.yaml'
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 构建项目
+        run: pnpm build
+
+      - name: 创建发布包
+        working-directory: .
+        run: |
+          mkdir release/hyprglaze-bar-${{ github.ref_name }}
+
+          # 复制主题文件
+          xcopy /E /I "zebar\hyprglaze-bar\dist" "release\hyprglaze-bar-${{ github.ref_name }}\hyprglaze-bar"
+          copy "zebar\hyprglaze-bar\zpack.json" "release\hyprglaze-bar-${{ github.ref_name }}\hyprglaze-bar\"
+
+          # 复制配置文件
+          copy "zebar\settings.json" "release\hyprglaze-bar-${{ github.ref_name }}\"
+          if exist "glazewm\config.yaml" xcopy /E /I "glazewm" "release\hyprglaze-bar-${{ github.ref_name }}\glazewm"
+
+          # 复制文档
+          copy "README.md" "release\hyprglaze-bar-${{ github.ref_name }}\"
+          copy "LICENSE" "release\hyprglaze-bar-${{ github.ref_name }}\"
+
+          # 创建压缩包
+          powershell Compress-Archive -Path "release\hyprglaze-bar-${{ github.ref_name }}\*" -DestinationPath "hyprglaze-bar-${{ github.ref_name }}.zip"
+
+      - name: 创建 GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: hyprglaze-bar-${{ github.ref_name }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false

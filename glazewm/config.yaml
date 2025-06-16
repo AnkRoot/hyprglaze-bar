@@ -1,0 +1,393 @@
+# ===================================================================
+# GlazeWM 配置文件
+# 结构顺序：基础设置 -> 外观 -> 行为 -> 工作区 -> 规则 -> 快捷键
+# ===================================================================
+
+# region 1. 基础设置 (General Settings)
+general:
+  # === 生命周期命令 ===
+  # WM启动时运行的命令（适用于运行脚本或启动其他应用程序）
+  startup_commands: ['shell-exec zebar']
+
+  # WM关闭前运行的命令
+  shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']
+
+  # 重载WM配置后运行的命令
+  config_reload_commands: []
+
+  # === 焦点行为 ===
+  # 是否自动聚焦光标下方的窗口
+  focus_follows_cursor: false
+
+  # 聚焦当前工作区时是否在前一个聚焦的工作区之间切换
+  toggle_workspace_on_refocus: false
+
+  # === 光标跳转设置 ===
+  cursor_jump:
+    # 是否在指定触发条件下自动移动光标
+    enabled: true
+    # 光标跳转触发条件：
+    # - 'monitor_focus': 显示器间焦点变化时跳转
+    # - 'window_focus': 窗口间焦点变化时跳转
+    trigger: 'monitor_focus'
+
+  # === 窗口隐藏方式 ===
+  # 切换工作区时如何隐藏窗口：
+  # - 'cloak': 推荐。无动画直接隐藏窗口
+  # - 'hide': 传统方法（v3.5及更早版本），有短暂动画但某些应用可能不稳定
+  hide_method: 'cloak'
+
+  # === 任务栏显示 ===
+  # 影响原生Windows任务栏中显示的窗口。如果使用`hide_method: 'hide'`则无效。
+  # - true: 显示所有窗口（无论属于哪个工作区）
+  # - false: 仅显示当前可见工作区的窗口
+  show_all_in_taskbar: false
+# endregion
+
+# region 2. 外观设置 (Appearance Settings)
+
+# === 窗口间隙设置 ===
+gaps:
+  # 是否根据显示器的DPI缩放间隙
+  scale_with_dpi: true
+
+  # 相邻窗口之间的间隙
+  inner_gap: '3px'
+
+  # 窗口与屏幕边缘的间隙
+  outer_gap:
+    top: '2px' # 顶部间隙
+    right: '2px' # 右侧间隙
+    bottom: '2px' # 底部间隙
+    left: '2px' # 左侧间隙
+
+# === 窗口视觉效果 ===
+window_effects:
+  # 聚焦窗口的视觉效果
+  focused_window:
+    # 彩色边框高亮（仅限Windows 11）
+    border:
+      enabled: true
+      color: '#0078d4' # 鲜明的蓝色边框
+
+    # 隐藏标题栏（注意：可能导致某些应用渲染异常）
+    hide_title_bar:
+      enabled: false
+
+    # 窗口圆角样式（仅限Windows 11）
+    corner_style:
+      enabled: false
+      style: 'square' # 可选值: 'square'(直角), 'rounded'(圆角), 'small_rounded'(小圆角)
+
+    # 窗口透明度
+    transparency:
+      enabled: false
+      opacity: '95%' # 可设为'95%'或'0.95'表示轻微透明
+
+  # 非聚焦窗口的视觉效果
+  other_windows:
+    border:
+      enabled: true
+      color: '#a1a1a1' # 灰色边框
+    hide_title_bar:
+      enabled: false
+    corner_style:
+      enabled: false
+      style: 'square'
+    transparency:
+      enabled: false
+      opacity: '0%'
+# endregion
+
+# region 3. 窗口行为设置 (Window Behavior)
+window_behavior:
+  # 新窗口创建时的默认状态
+  # 可选值: 'tiling'(平铺), 'floating'(浮动)
+  initial_state: 'tiling'
+
+  # 新窗口创建的默认选项（也会影响使用`set-floating`等状态变更命令时的默认行为）
+  state_defaults:
+    # 浮动窗口默认设置
+    floating:
+      centered: true # 是否默认居中浮动窗口
+      shown_on_top: true # 是否默认将浮动窗口设为置顶显示
+
+    # 全屏窗口默认设置
+    fullscreen:
+      maximized: true # 尽可能最大化窗口（如果窗口没有最大化按钮，则正常全屏显示）
+      shown_on_top: false # 是否将全屏窗口设为置顶显示
+
+# endregion
+
+# region 4. 工作区设置 (Workspaces)
+workspaces:
+  - name: '1' # 工作区1
+  - name: '2' # 工作区2
+  - name: '3' # 工作区3
+  - name: '4' # 工作区4
+  - name: '5' # 工作区5
+  - name: '6' # 工作区6
+  - name: '7' # 工作区7
+  - name: '8' # 工作区8
+  - name: '9' # 工作区9
+  - name: '0' # 工作区0
+  - name: 'browser' # 工作区  browser
+  - name: 'wechat' # 工作区wechat
+# endregion
+
+# region 5. 窗口规则 (Window Rules)
+window_rules:
+  # 忽略指定窗口（不被窗口管理器管理）
+  - commands: ['ignore']
+    match:
+      # === 系统组件 ===
+      # 忽略所有Zebar窗口
+      - window_process: { equals: 'zebar' }
+
+      # # === 系统管理器 ===
+      # # 任务管理器
+      # - window_process: { equals: 'Taskmgr' }
+      # - window_process: { equals: 'taskmgr' }
+      # # 资源监视器
+      # - window_process: { equals: 'resmon' }
+      # - window_process: { equals: 'perfmon' }
+      # # 系统配置
+      # - window_process: { equals: 'msconfig' }
+      # # 注册表编辑器
+      # - window_process: { equals: 'regedit' }
+      # # 服务管理器
+      # - window_process: { equals: 'services' }
+      # # 事件查看器
+      # - window_process: { equals: 'eventvwr' }
+      # # 设备管理器
+      # - window_process: { equals: 'devmgmt' }
+      # # 磁盘管理
+      # - window_process: { equals: 'diskmgmt' }
+
+      # === 输入法相关 ===
+      # 微软输入法
+      - window_process: { equals: 'ChsIME' }
+      - window_process: { equals: 'ctfmon' }
+      - window_class: { regex: 'IME' }
+      - window_class: { regex: 'MSCTFIME.*' }
+      # 搜狗输入法
+      - window_process: { equals: 'SogouPinyin' }
+      - window_process: { equals: 'SogouCloud' }
+      - window_class: { regex: 'SogouPY.*' }
+      # QQ输入法
+      - window_process: { equals: 'QQPinyin' }
+      - window_class: { regex: 'QQPinyin.*' }
+      # 百度输入法
+      - window_process: { equals: 'BaiduPinyin' }
+      - window_class: { regex: 'BaiduPY.*' }
+      # 输入法候选窗口通用规则
+      - window_class: { regex: 'CandidateWindow.*' }
+      - window_class: { regex: 'InputMethod.*' }
+      - window_title: { regex: '输入法.*' }
+
+      # === 浏览器特殊窗口 ===
+      # 忽略浏览器的画中画窗口
+      - window_title: { regex: '[Pp]icture.in.[Pp]icture' }
+        window_class: { regex: 'Chrome_WidgetWin_1|MozillaDialogClass' }
+
+      # === 第三方应用 ===
+      # PowerToys 相关窗口
+      - window_process: { equals: 'PowerToys' }
+        window_class: { regex: 'HwndWrapper\[PowerToys\.PowerAccent.*?\]' }
+      - window_process: { equals: 'PowerToys' }
+        window_title: { regex: '.*? - Peek' } # PowerToys的Peek功能窗口
+
+      # Lively壁纸应用
+      - window_process: { equals: 'Lively' }
+        window_class: { regex: 'HwndWrapper' }
+
+  # 浏览器默认启动到工作区browser|2
+  # - commands: ['move --workspace browser']
+  - commands: ['move --workspace 2']
+    match:
+      - window_process:
+          { regex: '(?i)(chrome|firefox|firefox-esr|msedge|brave|vivaldi|opera|safari|librewolf|waterfox)' }
+
+    # CherryStudio默认启动到工作区9
+  - commands: ['move --workspace 9']
+    match:
+      - window_process: { regex: '(?i)cherry[ ]?studio' }
+
+  # 微信默认启动到工作区wechat
+  - commands: ['move --workspace wechat']
+    match:
+      - window_process: { regex: '(?i)微信|wechat|wechat\.exe|WeChatApp(Ex)?|TencentOCR|WeChatPlayer' }
+
+# endregion
+
+# region 6. 快捷键绑定 (Keybindings)
+keybindings:
+  # region 6.1 窗口焦点控制 (Window Focus Control)
+
+  # === 方向焦点移动 ===
+  # 向左移动焦点
+  - commands: ['focus --direction left']
+    bindings: ['lwin+left']
+
+  # 向右移动焦点
+  - commands: ['focus --direction right']
+    bindings: ['lwin+right']
+
+  # 向上移动焦点
+  - commands: ['focus --direction up']
+    bindings: ['lwin+up']
+
+  # 向下移动焦点
+  - commands: ['focus --direction down']
+    bindings: ['lwin+down']
+
+  # === 窗口移动 ===
+  # 向左移动聚焦窗口
+  - commands: ['move --direction left']
+    bindings: ['lwin+shift+left']
+
+  # 向右移动聚焦窗口
+  - commands: ['move --direction right']
+    bindings: ['lwin+shift+right']
+
+  # 向上移动聚焦窗口
+  - commands: ['move --direction up']
+    bindings: ['lwin+shift+up']
+
+  # 向下移动聚焦窗口
+  - commands: ['move --direction down']
+    bindings: ['lwin+shift+down']
+  # endregion
+
+  # region 6.2 窗口状态控制 (Window State Control)
+
+  # === 布局控制 ===
+  # 切换平铺方向（决定新窗口的插入位置）
+  - commands: ['toggle-tiling-direction']
+    bindings: ['lwin+j']
+
+  # === 窗口模式切换 ===
+  # 切换浮动模式（居中显示）
+  - commands: ['toggle-floating --centered']
+    bindings: ['lwin+space']
+
+  # 切换全屏状态
+  - commands: ['toggle-fullscreen']
+    bindings: ['lwin+f']
+
+  # 切换平铺状态
+  - commands: ['toggle-tiling']
+    bindings: ['lwin+t']
+
+  # 最小化/恢复窗口
+  - commands: ['toggle-minimized']
+    bindings: ['lwin+m']
+
+  # 窗口置顶/取消置顶
+  - commands: ['set-floating --shown-on-top']
+    bindings: ['lwin+shift+t']
+
+  # === 窗口操作 ===
+  # 关闭聚焦窗口（保留系统标准Alt+F4）
+  - commands: ['close']
+    bindings: ['lwin+q', 'alt+f4']
+  # endregion
+
+  # region 6.3 系统管理 (System Management)
+
+  # === WM系统控制（使用Ctrl避免误操作）===
+  # 退出窗口管理器
+  - commands: ['wm-exit']
+    bindings: ['lwin+ctrl+q']
+
+  # 重新加载配置文件
+  - commands: ['wm-reload-config']
+    bindings: ['lwin+ctrl+r']
+
+  # 重绘所有窗口
+  - commands: ['wm-redraw']
+    bindings: ['lwin+ctrl+w']
+
+  # 暂停/恢复窗口管理功能
+  - commands: ['wm-toggle-pause']
+    bindings: ['lwin+ctrl+p']
+  # endregion
+
+  # region 6.4 应用程序启动 (Application Launcher)
+
+  # === 常用应用快速启动 ===
+  # 启动记事本
+  - commands: ['shell-exec notepad']
+    bindings: ['lwin+n']
+
+  # 启动Chrome浏览器（默认在工作区browser启动）
+  - commands: ['shell-exec chrome']
+    bindings: ['lwin+b']
+
+  # 启动微信（默认在工作区wechat启动）
+  - commands: ['shell-exec wechat']
+    bindings: ['lwin+w']
+
+  # 启动命令提示符
+  - commands: ['shell-exec cmd']
+    bindings: ['lwin+enter']
+  # endregion
+
+  # region 6.5 工作区导航 (Workspace Navigation)
+
+  # === 工作区切换 ===
+  # 下一个活动工作区
+  - commands: ['focus --next-active-workspace']
+    bindings: ['lwin+page_down', 'lwin+ctrl+right']
+
+  # 上一个活动工作区
+  - commands: ['focus --prev-active-workspace']
+    bindings: ['lwin+page_up', 'lwin+ctrl+left']
+
+  # === 直接工作区跳转（数字键）===
+  # 聚焦工作区
+  - commands: ['focus --workspace 1']
+    bindings: ['lwin+1']
+  - commands: ['focus --workspace 2']
+    bindings: ['lwin+2']
+  - commands: ['focus --workspace 3']
+    bindings: ['lwin+3']
+  - commands: ['focus --workspace 4']
+    bindings: ['lwin+4']
+  - commands: ['focus --workspace 5']
+    bindings: ['lwin+5']
+  - commands: ['focus --workspace 6']
+    bindings: ['lwin+6']
+  - commands: ['focus --workspace 7']
+    bindings: ['lwin+7']
+  - commands: ['focus --workspace 8']
+    bindings: ['lwin+8']
+  - commands: ['focus --workspace 9']
+    bindings: ['lwin+9']
+  - commands: ['focus --workspace 0']
+    bindings: ['lwin+0']
+
+  # === 窗口移动到工作区（Shift+数字键）===
+  # 移动窗口到工作区并跟随
+  - commands: ['move --workspace 1', 'focus --workspace 1']
+    bindings: ['lwin+shift+1']
+  - commands: ['move --workspace 2', 'focus --workspace 2']
+    bindings: ['lwin+shift+2']
+  - commands: ['move --workspace 3', 'focus --workspace 3']
+    bindings: ['lwin+shift+3']
+  - commands: ['move --workspace 4', 'focus --workspace 4']
+    bindings: ['lwin+shift+4']
+  - commands: ['move --workspace 5', 'focus --workspace 5']
+    bindings: ['lwin+shift+5']
+  - commands: ['move --workspace 6', 'focus --workspace 6']
+    bindings: ['lwin+shift+6']
+  - commands: ['move --workspace 7', 'focus --workspace 7']
+    bindings: ['lwin+shift+7']
+  - commands: ['move --workspace 8', 'focus --workspace 8']
+    bindings: ['lwin+shift+8']
+  - commands: ['move --workspace 9', 'focus --workspace 9']
+    bindings: ['lwin+shift+9']
+  - commands: ['move --workspace 0', 'focus --workspace 0']
+    bindings: ['lwin+shift+0']
+  # endregion
+# endregion

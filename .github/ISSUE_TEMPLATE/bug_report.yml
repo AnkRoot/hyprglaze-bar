@@ -1,0 +1,52 @@
+name: Bug 报告
+description: 报告一个问题
+title: '[Bug]: '
+labels: ['bug']
+
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 问题描述
+      description: 请描述遇到的问题
+      placeholder: 告诉我们发生了什么...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开...
+        2. 点击...
+        3. 看到错误...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      value: |
+        - OS: [例如 Windows 11]
+        - GlazeWM 版本: [例如 3.1.0]
+        - Zebar 版本: [例如 3.1.0]
+        - HyprGlaze Bar 版本: [例如 1.0.0]
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 错误日志（可选）
+      description: 如有错误信息或日志，请粘贴在此
+      render: shell
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认事项
+      options:
+        - label: 我已搜索现有 Issues，确认这是新问题
+          required: true

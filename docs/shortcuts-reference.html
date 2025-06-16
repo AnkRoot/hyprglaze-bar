@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HyprGlaze Bar - 快捷键参考</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      .search-container {
+        margin-bottom: 30px;
+        position: relative;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 15px 50px 15px 20px;
+        font-size: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 50px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-box:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+      }
+
+      .shortcuts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 25px;
+      }
+
+      .category {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .category:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .category-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .category-icon {
+        font-size: 24px;
+        margin-right: 12px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: white;
+      }
+
+      .focus-control .category-icon {
+        background: #4caf50;
+      }
+      .window-state .category-icon {
+        background: #2196f3;
+      }
+      .system-mgmt .category-icon {
+        background: #ff9800;
+      }
+      .app-launcher .category-icon {
+        background: #9c27b0;
+      }
+      .workspace-nav .category-icon {
+        background: #f44336;
+      }
+
+      .category-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .shortcut-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #f5f5f5;
+        transition: background-color 0.2s ease;
+      }
+
+      .shortcut-item:last-child {
+        border-bottom: none;
+      }
+
+      .shortcut-item:hover {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .shortcut-desc {
+        flex: 1;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .shortcut-keys {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .key {
+        background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+        color: #333;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #d0d0d0;
+      }
+
+      .key.modifier {
+        background: linear-gradient(145deg, #667eea, #5a6fd8);
+        color: white;
+        border-color: #4a5bc4;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+        font-size: 18px;
+      }
+
+      @media (max-width: 768px) {
+        .shortcuts-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .container {
+          padding: 20px;
+        }
+      }
+
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+
+        .container {
+          background: white;
+          box-shadow: none;
+          border-radius: 0;
+        }
+
+        .search-container {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🚀 HyprGlaze Bar 快捷键参考</h1>
+        <p>基于 GlazeWM 的完整快捷键指南 - 让你的 Windows 桌面管理如 Linux 般高效</p>
+      </div>
+
+      <div class="search-container">
+        <input type="text" class="search-box" placeholder="搜索快捷键或功能..." id="searchInput" />
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <div class="shortcuts-grid" id="shortcutsGrid">
+        <!-- 窗口焦点控制 -->
+        <div class="category focus-control">
+          <div class="category-header">
+            <div class="category-icon">🎯</div>
+            <div class="category-title">窗口焦点控制</div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向左移动焦点</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">←</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向右移动焦点</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">→</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向上移动焦点</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">↑</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向下移动焦点</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">↓</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向左移动窗口</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Shift</span>
+              <span class="key">←</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向右移动窗口</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Shift</span>
+              <span class="key">→</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向上移动窗口</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Shift</span>
+              <span class="key">↑</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">向下移动窗口</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Shift</span>
+              <span class="key">↓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 窗口状态控制 -->
+        <div class="category window-state">
+          <div class="category-header">
+            <div class="category-icon">🪟</div>
+            <div class="category-title">窗口状态控制</div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">切换平铺方向</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">J</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">切换浮动模式</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">Space</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">切换全屏状态</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">F</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">切换平铺状态</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">T</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">最小化/恢复窗口</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">M</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">窗口置顶</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Shift</span>
+              <span class="key">T</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">关闭窗口</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">Q</span>
+              <span style="margin: 0 8px; color: #999">|</span>
+              <span class="key modifier">Alt</span>
+              <span class="key">F4</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 系统管理 -->
+        <div class="category system-mgmt">
+          <div class="category-header">
+            <div class="category-icon">⚙️</div>
+            <div class="category-title">系统管理</div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">退出窗口管理器</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Ctrl</span>
+              <span class="key">Q</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">重新加载配置</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Ctrl</span>
+              <span class="key">R</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">重绘所有窗口</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Ctrl</span>
+              <span class="key">W</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">暂停/恢复窗口管理</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Ctrl</span>
+              <span class="key">P</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 应用程序启动 -->
+        <div class="category app-launcher">
+          <div class="category-header">
+            <div class="category-icon">🚀</div>
+            <div class="category-title">应用程序启动</div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">启动记事本</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">N</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">启动浏览器 (Chrome)</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">B</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">启动微信</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">W</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">启动命令提示符</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">Enter</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 工作区导航 -->
+        <div class="category workspace-nav">
+          <div class="category-header">
+            <div class="category-icon">🏢</div>
+            <div class="category-title">工作区导航</div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">下一个活动工作区</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">Page Down</span>
+              <span style="margin: 0 8px; color: #999">|</span>
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Ctrl</span>
+              <span class="key">→</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">上一个活动工作区</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">Page Up</span>
+              <span style="margin: 0 8px; color: #999">|</span>
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Ctrl</span>
+              <span class="key">←</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">切换到工作区 1-9, 0</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key">1-9, 0</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <div class="shortcut-desc">移动窗口到工作区 1-9, 0</div>
+            <div class="shortcut-keys">
+              <span class="key modifier">Win</span>
+              <span class="key modifier">Shift</span>
+              <span class="key">1-9, 0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-results hidden" id="noResults">
+        <p>🔍 未找到匹配的快捷键</p>
+        <p>尝试使用不同的关键词搜索</p>
+      </div>
+    </div>
+
+    <script>
+      // 搜索功能
+      const searchInput = document.getElementById('searchInput');
+      const shortcutsGrid = document.getElementById('shortcutsGrid');
+      const noResults = document.getElementById('noResults');
+
+      searchInput.addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase().trim();
+        const categories = shortcutsGrid.querySelectorAll('.category');
+        let hasVisibleResults = false;
+
+        categories.forEach(category => {
+          const shortcutItems = category.querySelectorAll('.shortcut-item');
+          let categoryHasVisible = false;
+
+          shortcutItems.forEach(item => {
+            const desc = item.querySelector('.shortcut-desc').textContent.toLowerCase();
+            const keys = Array.from(item.querySelectorAll('.key'))
+              .map(k => k.textContent.toLowerCase())
+              .join(' ');
+
+            if (desc.includes(searchTerm) || keys.includes(searchTerm)) {
+              item.classList.remove('hidden');
+              categoryHasVisible = true;
+              hasVisibleResults = true;
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+
+          if (categoryHasVisible || searchTerm === '') {
+            category.classList.remove('hidden');
+          } else {
+            category.classList.add('hidden');
+          }
+        });
+
+        if (hasVisibleResults || searchTerm === '') {
+          noResults.classList.add('hidden');
+          shortcutsGrid.classList.remove('hidden');
+        } else {
+          noResults.classList.remove('hidden');
+          shortcutsGrid.classList.add('hidden');
+        }
+      });
+
+      // 键盘导航
+      document.addEventListener('keydown', function (e) {
+        if (e.key === '/' && e.target !== searchInput) {
+          e.preventDefault();
+          searchInput.focus();
+        }
+        if (e.key === 'Escape' && e.target === searchInput) {
+          searchInput.blur();
+          searchInput.value = '';
+          searchInput.dispatchEvent(new Event('input'));
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+@import './animations.css';
+
+@theme {
+  --color-background: rgb(var(--background));
+  --color-text: rgb(var(--text));
+  --color-text-muted: rgb(var(--text-muted));
+  --color-icon: rgb(var(--icon));
+  --color-primary: rgb(var(--primary));
+  --color-primary-border: rgb(var(--primary-border));
+  --color-button-border: rgb(var(--button-border));
+
+  --font-mono: Geist Mono, monospace;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+:root {
+  /* 默认深色主题配色 - 这些值会被JavaScript动态覆盖 */
+  --background: 15 15 15; /* 深灰背景 */
+  --text: 255 255 255; /* 白色文字 */
+  --text-muted: 156 163 175; /* 灰色文字 */
+  --icon: 156 163 175; /* 图标颜色 */
+  --primary: 59 130 246; /* 蓝色主色调 */
+  --primary-border: 37 99 235; /* 主色调边框 */
+  --button-border: 55 65 81; /* 按钮边框 */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--text-muted), 0.3);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--text-muted), 0.5);
+}
+
+/* 水平主题选择器样式 */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* 主题选择器动画 */
+@keyframes theme-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.theme-indicator {
+  animation: theme-pulse 2s ease-in-out infinite;
+}
+
+/* 自定义滑块样式 */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgb(var(--primary));
+  cursor: pointer;
+  border: 2px solid rgb(var(--background));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: rgb(var(--primary-border));
+  transform: scale(1.1);
+}
+
+.slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgb(var(--primary));
+  cursor: pointer;
+  border: 2px solid rgb(var(--background));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 现代化音量滑块样式 */
+.modern-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  position: relative;
+}
+
+.modern-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgb(var(--text));
+  cursor: pointer;
+  border: 2px solid rgba(var(--text), 0.8);
+  box-shadow: 0 2px 8px rgba(var(--background), 0.15), 0 0 0 1px rgba(var(--background), 0.1),
+    inset 0 1px 0 rgba(var(--text), 0.8);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+}
+
+.modern-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(var(--background), 0.2), 0 0 0 2px rgba(var(--primary), 0.3),
+    inset 0 1px 0 rgba(var(--text), 0.9);
+}
+
+.modern-slider::-webkit-slider-thumb:active {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(var(--background), 0.25), 0 0 0 3px rgba(var(--primary), 0.4),
+    inset 0 1px 0 rgba(var(--text), 0.9);
+}
+
+.modern-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgb(var(--text));
+  cursor: pointer;
+  border: 2px solid rgba(var(--text), 0.8);
+  box-shadow: 0 2px 8px rgba(var(--background), 0.15), 0 0 0 1px rgba(var(--background), 0.1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-slider::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(var(--background), 0.2), 0 0 0 2px rgba(var(--primary), 0.3);
+}

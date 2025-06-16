@@ -1,0 +1,59 @@
+{
+  "name": "hyprglaze-bar",
+  "version": "1.0.0",
+  "description": "现代化状态栏 - 将 Hyprland 的优雅体验通过 GlazeWM 带到 Windows，基于 React + TypeScript 构建",
+  "type": "module",
+  "keywords": [
+    "hyprland",
+    "glazewm",
+    "windows",
+    "statusbar",
+    "tiling",
+    "wayland-style",
+    "react",
+    "modern",
+    "zebar",
+    "typescript"
+  ],
+  "author": "AnkRoot <ank@linux.do>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnkRoot/hyprglaze-bar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AnkRoot/hyprglaze-bar/issues"
+  },
+  "homepage": "https://github.com/AnkRoot/hyprglaze-bar#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview",
+    "clean": "rimraf dist node_modules/.vite",
+    "install:clean": "pnpm clean && pnpm install",
+    "dev:full": "pnpm install:clean && pnpm dev",
+    "build:prod": "pnpm install --frozen-lockfile && pnpm build"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.80.6",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.16.0",
+    "lucide-react": "^0.514.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.1",
+    "zebar": "^3.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "postcss": "^8.5.4",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.1.8",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

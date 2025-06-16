@@ -1,0 +1,38 @@
+name: 功能请求
+description: 建议一个新功能
+title: '[Feature]: '
+labels: ['enhancement']
+
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 您遇到了什么问题？
+      placeholder: 我希望能够...，但是目前...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 解决方案
+      description: 您希望看到什么样的功能？
+      placeholder: 我希望添加一个功能，可以...
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: 使用场景（可选）
+      description: 这个功能的具体使用场景
+      placeholder: 例如：在多显示器环境下，希望能够...
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认事项
+      options:
+        - label: 我已搜索现有 Issues，确认这是新的功能请求
+          required: true
