@@ -28,8 +28,8 @@ jobs:
 
       - name: 获取 pnpm store 目录
         shell: bash
+        working-directory: zebar/hyprglaze-bar
         run: |
-          cd zebar/hyprglaze-bar
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: 设置 pnpm 缓存
