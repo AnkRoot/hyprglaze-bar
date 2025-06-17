@@ -11,12 +11,10 @@ permissions:
 jobs:
   release:
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: zebar/hyprglaze-bar
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 检出代码
+        uses: actions/checkout@v4
 
       - name: 安装 pnpm
         uses: pnpm/action-setup@v4
@@ -27,13 +25,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
-          cache-dependency-path: 'zebar/hyprglaze-bar/pnpm-lock.yaml'
+
+      - name: 获取 pnpm store 目录
+        shell: bash
+        run: |
+          cd zebar/hyprglaze-bar
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: 设置 pnpm 缓存
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('zebar/hyprglaze-bar/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: 安装依赖
+        working-directory: zebar/hyprglaze-bar
         run: pnpm install --frozen-lockfile
 
       - name: 构建项目
+        working-directory: zebar/hyprglaze-bar
         run: pnpm build
 
       - name: 创建发布包

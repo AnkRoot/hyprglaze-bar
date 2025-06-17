@@ -108,8 +108,6 @@ _现代化状态栏布局：平铺控制 | 工作区管理 | 天气时间 | 系�
 
 ![快捷键参考](docs/images/key.png)
 
-> 🔗 **完整快捷键参考**: [查看可视化快捷键指南](docs/shortcuts-reference.html)
-
 </div>
 
 ### 状态栏操作
