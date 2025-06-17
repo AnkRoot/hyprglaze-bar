@@ -26,11 +26,26 @@ jobs:
         with:
           node-version: '20'
 
-      - name: 获取 pnpm store 目录
-        shell: bash
-        working-directory: zebar/hyprglaze-bar
+      - name: 验证文件结构
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "当前目录内容:"
+          dir
+          echo "检查 zebar/hyprglaze-bar 目录:"
+          dir zebar\hyprglaze-bar
+          echo "检查 pnpm-lock.yaml 文件:"
+          if (Test-Path "zebar\hyprglaze-bar\pnpm-lock.yaml") {
+            echo "✅ pnpm-lock.yaml 存在"
+          } else {
+            echo "❌ pnpm-lock.yaml 不存在"
+          }
+
+      - name: 获取 pnpm store 目录
+        shell: pwsh
+        run: |
+          cd zebar\hyprglaze-bar
+          $storePath = pnpm store path --silent
+          echo "STORE_PATH=$storePath" >> $env:GITHUB_ENV
+          echo "Store path: $storePath"
 
       - name: 设置 pnpm 缓存
         uses: actions/cache@v4
@@ -41,12 +56,24 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: 安装依赖
-        working-directory: zebar/hyprglaze-bar
-        run: pnpm install --frozen-lockfile
+        shell: pwsh
+        run: |
+          cd zebar\hyprglaze-bar
+          echo "当前目录: $(Get-Location)"
+          echo "检查 pnpm-lock.yaml:"
+          if (Test-Path "pnpm-lock.yaml") {
+            echo "✅ 找到 pnpm-lock.yaml"
+          } else {
+            echo "❌ 未找到 pnpm-lock.yaml"
+            exit 1
+          }
+          pnpm install --frozen-lockfile
 
       - name: 构建项目
-        working-directory: zebar/hyprglaze-bar
-        run: pnpm build
+        shell: pwsh
+        run: |
+          cd zebar\hyprglaze-bar
+          pnpm build
 
       - name: 创建发布包
         working-directory: .
