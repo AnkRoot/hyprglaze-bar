@@ -1,9 +1,10 @@
 # Dependencies
 node_modules/
-pnpm-lock.yaml
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Note: pnpm-lock.yaml should be committed to ensure consistent dependencies across environments
 
 # Build outputs
 dist/
